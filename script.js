@@ -1,4 +1,15 @@
-// Mobile Navigation Toggle
+// Loader
+window.addEventListener('load', () => {
+    const loader = document.getElementById('loader');
+    setTimeout(() => {
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }, 800);
+});
+
+// Navigation
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -6,34 +17,28 @@ navToggle.addEventListener('click', () => {
     navMenu.classList.toggle('active');
 });
 
-// Scroll Progress Bar
-window.addEventListener('scroll', () => {
-    const scrollProgress = document.querySelector('.scroll-progress');
-    const scrollTop = window.pageYOffset;
-    const docHeight = document.body.offsetHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
-});
-
-// Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
     });
 });
 
-// Smooth scrolling for navigation links
+// Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            target.scrollIntoView({ behavior: 'smooth' });
         }
     });
+});
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+    const scrollProgress = document.querySelector('.scroll-progress');
+    const scrollPercent = (window.pageYOffset / (document.body.offsetHeight - window.innerHeight)) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
 });
 
 // Navbar background on scroll
@@ -48,499 +53,38 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Legacy contact form handling (replaced by enhanced version below)
-// Keeping for compatibility
-
-// Animate elements on scroll
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
-
-// Observe elements for animation
-document.addEventListener('DOMContentLoaded', () => {
-    const animateElements = document.querySelectorAll('.project-card, .skill-category, .about-stats .stat');
-    
-    animateElements.forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(30px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
-});
-
-// Initialize fade-in effect when page loads
-window.addEventListener('load', () => {
-    // Animate hero elements sequentially
-    const heroElements = [
-        '.hero-title',
-        '.hero-subtitle', 
-        '.hero-description',
-        '.hero-buttons',
-        '.profile-pic'
-    ];
-    
-    heroElements.forEach((selector, index) => {
-        const element = document.querySelector(selector);
-        if (element) {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-            
-            setTimeout(() => {
-                element.style.opacity = '1';
-                element.style.transform = 'translateY(0)';
-            }, 200 + (index * 150));
-        }
-    });
-});
-
-// Add active class to navigation links based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section[id]');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= (sectionTop - 200)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// Parallax effect for hero section
-window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const rate = scrolled * -0.5;
-    
-    if (hero) {
-        hero.style.transform = `translateY(${rate}px)`;
-    }
-});
-
-// Skills animation on scroll
-const skillItems = document.querySelectorAll('.skill-item');
-skillItems.forEach((item, index) => {
-    item.style.animationDelay = `${index * 0.1}s`;
-});
-
-// Project cards hover effect
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Duplicate skills for seamless loop
+// Duplicate content for infinite scroll
 const skillsContainer = document.querySelector('.skills-container');
-const skillsSlider = document.querySelector('.skills-slider');
-const originalSkills = skillsContainer.innerHTML;
-skillsContainer.innerHTML = originalSkills + originalSkills;
+const certContainer = document.querySelector('.cert-container');
 
-// Mouse wheel control for skills slider
-skillsSlider.addEventListener('wheel', (e) => {
-    e.preventDefault();
-    
-    skillsContainer.classList.add('smooth-transition');
-    
-    if (e.deltaY > 0) {
-        // Scroll down - go to last skill
-        skillsContainer.style.transform = 'translateX(-75%)';
-    } else {
-        // Scroll up - go to first skill
-        skillsContainer.style.transform = 'translateX(0)';
-    }
-    
-    setTimeout(() => {
-        skillsContainer.classList.remove('smooth-transition');
-        skillsContainer.style.transform = '';
-    }, 1200);
-});
+if (skillsContainer) {
+    const originalSkills = skillsContainer.innerHTML;
+    skillsContainer.innerHTML = originalSkills + originalSkills;
+}
 
-// Add CSS for active nav link and button effects
-const style = document.createElement('style');
-style.textContent = `
-    .nav-link.active {
-        color: #3498db !important;
-        position: relative;
-    }
-    
-    .nav-link.active::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 100%;
-        height: 2px;
-        background: #3498db;
-    }
-    
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .skill-item {
-        animation: fadeInUp 0.6s ease forwards;
-        opacity: 0;
-    }
-    
-    @keyframes ripple {
-        to {
-            transform: scale(2);
-            opacity: 0;
-        }
-    }
-    
-    .btn {
-        position: relative;
-        overflow: hidden;
-    }
-`;
-document.head.appendChild(style);
+if (certContainer) {
+    const originalCerts = certContainer.innerHTML;
+    certContainer.innerHTML = originalCerts + originalCerts;
+}
 
-// Add button ripple effects
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.btn').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const ripple = document.createElement('span');
-            const rect = btn.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-            
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.6s ease-out;
-                pointer-events: none;
-            `;
-            
-            btn.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-});
-
-// Toggle projects visibility
+// Toggle projects
 function toggleProjects() {
     const hiddenProjects = document.querySelectorAll('.project-card.hidden');
-    const expandBtn = document.querySelector('.expand-btn');
     const expandText = document.querySelector('.expand-text');
-    const expandIcon = document.querySelector('.expand-icon');
+    const expandBtn = document.querySelector('.expand-btn');
     
     if (hiddenProjects[0].style.display === 'block') {
-        hiddenProjects.forEach(project => {
-            project.style.display = 'none';
-        });
+        hiddenProjects.forEach(project => project.style.display = 'none');
         expandText.textContent = 'View More Projects';
         expandBtn.classList.remove('expanded');
     } else {
-        hiddenProjects.forEach(project => {
-            project.style.display = 'block';
-        });
+        hiddenProjects.forEach(project => project.style.display = 'block');
         expandText.textContent = 'View Less Projects';
         expandBtn.classList.add('expanded');
     }
 }
 
-// Loading Animation
-window.addEventListener('load', () => {
-    const loader = document.getElementById('loader');
-    if (loader) {
-        setTimeout(() => {
-            loader.classList.add('hidden');
-        }, 100);
-    }
-});
-
-
-
-// Enhanced Form Validation
-const form = document.getElementById('contact-form');
-const submitBtn = document.getElementById('submit-btn');
-const btnText = document.querySelector('.btn-text');
-const btnLoading = document.querySelector('.btn-loading');
-const formSuccess = document.getElementById('form-success');
-
-// WhatsApp Form Handler
-const whatsappForm = document.getElementById('whatsapp-form');
-if (whatsappForm) {
-    whatsappForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        const name = document.getElementById('name').value;
-        const email = document.getElementById('email').value;
-        const subject = document.getElementById('subject').value;
-        const message = document.getElementById('message').value;
-        
-        if (name && email && subject && message) {
-            const whatsappMessage = `Hi! I'm ${name}\n\nEmail: ${email}\nSubject: ${subject}\n\nMessage: ${message}`;
-            const whatsappURL = `https://wa.me/917721809744?text=${encodeURIComponent(whatsappMessage)}`;
-            window.open(whatsappURL, '_blank');
-        } else {
-            alert('Please fill in all fields');
-        }
-    });
-}
-
-function validateForm() {
-    const name = document.getElementById('name');
-    const email = document.getElementById('email');
-    const subject = document.getElementById('subject');
-    const message = document.getElementById('message');
-    
-    let isValid = true;
-    
-    // Clear previous validation
-    clearValidation();
-    
-    // Validate name
-    if (!name.value.trim()) {
-        showError('name', 'Name is required');
-        isValid = false;
-    } else if (name.value.trim().length < 2) {
-        showError('name', 'Name must be at least 2 characters');
-        isValid = false;
-    } else {
-        showSuccess('name');
-    }
-    
-    // Validate email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email.value.trim()) {
-        showError('email', 'Email is required');
-        isValid = false;
-    } else if (!emailRegex.test(email.value)) {
-        showError('email', 'Please enter a valid email');
-        isValid = false;
-    } else {
-        showSuccess('email');
-    }
-    
-    // Validate subject
-    if (!subject.value.trim()) {
-        showError('subject', 'Subject is required');
-        isValid = false;
-    } else {
-        showSuccess('subject');
-    }
-    
-    // Validate message
-    if (!message.value.trim()) {
-        showError('message', 'Message is required');
-        isValid = false;
-    } else if (message.value.trim().length < 10) {
-        showError('message', 'Message must be at least 10 characters');
-        isValid = false;
-    } else {
-        showSuccess('message');
-    }
-    
-    return isValid;
-}
-
-function showError(fieldId, message) {
-    const field = document.getElementById(fieldId);
-    const errorElement = document.getElementById(fieldId + '-error');
-    
-    field.classList.add('error');
-    field.classList.remove('success');
-    errorElement.textContent = message;
-    errorElement.classList.add('show');
-}
-
-function showSuccess(fieldId) {
-    const field = document.getElementById(fieldId);
-    const errorElement = document.getElementById(fieldId + '-error');
-    
-    field.classList.add('success');
-    field.classList.remove('error');
-    errorElement.classList.remove('show');
-}
-
-function clearValidation() {
-    const fields = ['name', 'email', 'subject', 'message'];
-    fields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        const errorElement = document.getElementById(fieldId + '-error');
-        
-        field.classList.remove('error', 'success');
-        errorElement.classList.remove('show');
-    });
-}
-
-// Resume Download
-document.getElementById('download-resume').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    // Create a simple resume content
-    const resumeContent = `
-KAUSTUBH WARE
-AI/ML Engineer, Data Analyst & Geospatial Specialist
-
-Contact:
-Email: kaustubhware12@gmail.com
-Phone: +91 7721809744
-Location: Pune, India
-GitHub: https://github.com/kaustubhware
-LinkedIn: https://www.linkedin.com/in/kaustubhware12/
-
-EDUCATION:
-MSC-CA (Data Science) - Symbiosis Institute (CGPA: 9.5)
-BSC Computer Science - Savitribai Phule Pune University (CGPA: 7.69)
-
-EXPERIENCE:
-Data Analyst Intern - Bosch Pvt Ltd (March 25 - July 25)
-- Logistics and warehouse data analysis
-- Supply chain optimization
-- Automated dashboard development
-
-SKILLS:
-- Geospatial: QGIS, GEE, Geopandas, Folium, Leaflet, GDAL
-- Machine Learning: Python, TensorFlow, PyTorch, XGBoost
-- Data Analysis: Pandas, NumPy, Power BI, SQL
-- Web Development: Django, Flask, FastAPI, JavaScript
-
-CERTIFICATIONS:
-- Google Earth Engine Certified (2024)
-- AWS Machine Learning Specialty (2024)
-- TensorFlow Developer Certificate (2023)
-    `;
-    
-    // Create and download file
-    const blob = new Blob([resumeContent], { type: 'text/plain' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'Kaustubh_Ware_Resume.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    window.URL.revokeObjectURL(url);
-    
-    // Show feedback
-    const originalText = this.innerHTML;
-    this.innerHTML = '<i class="fas fa-check"></i> Downloaded!';
-    this.style.background = '#27ae60';
-    
-    setTimeout(() => {
-        this.innerHTML = originalText;
-        this.style.background = '';
-    }, 2000);
-});
-
-// Lazy Loading for Images
-const images = document.querySelectorAll('img[data-src]');
-const imageObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const img = entry.target;
-            img.src = img.dataset.src;
-            img.classList.remove('lazy');
-            observer.unobserve(img);
-        }
-    });
-});
-
-images.forEach(img => imageObserver.observe(img));
-
-// Enhanced Testimonials Animation
-const testimonialCards = document.querySelectorAll('.testimonial-card');
-testimonialCards.forEach((card, index) => {
-    card.style.animationDelay = `${index * 0.2}s`;
-    card.classList.add('fade-in-up');
-});
-
-// Blog Cards Hover Effects
-const blogCards = document.querySelectorAll('.blog-card');
-blogCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.transform = 'translateY(-15px) scale(1.02)';
-    });
-    
-    card.addEventListener('mouseleave', function() {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Back to Top Button
-const backToTopBtn = document.getElementById('back-to-top');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        backToTopBtn.classList.add('show');
-    } else {
-        backToTopBtn.classList.remove('show');
-    }
-});
-
-backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
-});
-
-// Smooth Page Transitions (Simplified)
-const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-        }
-    });
-}, { threshold: 0.2 });
-
-// Apply fade-in only to main sections
-document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
-    sections.forEach(section => {
-        section.classList.add('fade-in');
-        fadeObserver.observe(section);
-    });
-});
-
-// Counter Animation
+// Counter animation
 function animateCounters() {
     const counters = document.querySelectorAll('.counter');
     counters.forEach(counter => {
@@ -557,372 +101,56 @@ function animateCounters() {
                 counter.textContent = target;
             }
         };
-        
         updateCounter();
     });
 }
 
-// Trigger counter animation when stats section is visible
-const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            animateCounters();
-            statsObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.3 });
-
-document.addEventListener('DOMContentLoaded', () => {
-    const statsSection = document.querySelector('.about-stats');
-    if (statsSection) {
-        statsObserver.observe(statsSection);
-    }
-});
-
-
-
-// Mobile-Specific Enhancements
-
-// Touch gesture support for skills slider
-let startX = 0;
-let currentX = 0;
-let isDragging = false;
-
-skillsSlider.addEventListener('touchstart', (e) => {
-    startX = e.touches[0].clientX;
-    isDragging = true;
-    skillsContainer.style.transition = 'none';
-});
-
-skillsSlider.addEventListener('touchmove', (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    currentX = e.touches[0].clientX;
-    const diffX = currentX - startX;
-    skillsContainer.style.transform = `translateX(${diffX}px)`;
-});
-
-skillsSlider.addEventListener('touchend', () => {
-    if (!isDragging) return;
-    isDragging = false;
-    
-    const diffX = currentX - startX;
-    skillsContainer.style.transition = 'transform 0.3s ease';
-    
-    if (Math.abs(diffX) > 50) {
-        if (diffX > 0) {
-            // Swipe right - previous
-            skillsContainer.style.transform = 'translateX(0)';
-        } else {
-            // Swipe left - next
-            skillsContainer.style.transform = 'translateX(-50%)';
-        }
-    } else {
-        skillsContainer.style.transform = 'translateX(0)';
-    }
-    
-    setTimeout(() => {
-        skillsContainer.style.transition = '';
-        skillsContainer.style.transform = '';
-    }, 300);
-});
-
-// Mobile viewport height fix
-function setMobileVH() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-
-setMobileVH();
-window.addEventListener('resize', setMobileVH);
-window.addEventListener('orientationchange', () => {
-    setTimeout(setMobileVH, 100);
-});
-
-// Enhanced mobile navigation
-function initMobileNav() {
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
-    const navLinks = document.querySelectorAll('.nav-link');
-    const body = document.body;
-    
-    // Prevent body scroll when menu is open
-    navToggle.addEventListener('click', () => {
-        const isActive = navMenu.classList.contains('active');
-        
-        if (isActive) {
-            navMenu.classList.remove('active');
-            body.style.overflow = '';
-        } else {
-            navMenu.classList.add('active');
-            body.style.overflow = 'hidden';
-        }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            navMenu.classList.remove('active');
-            body.style.overflow = '';
-        }
-    });
-    
-    // Close menu on link click
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            body.style.overflow = '';
-        });
-    });
-}
-
-// Touch-friendly button feedback
-function addTouchFeedback() {
-    const buttons = document.querySelectorAll('.btn, .social-link, .method-btn');
-    
-    buttons.forEach(btn => {
-        btn.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.95)';
-        });
-        
-        btn.addEventListener('touchend', function() {
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 150);
-        });
-    });
-}
-
-// Optimize images for mobile
-function optimizeImagesForMobile() {
-    const images = document.querySelectorAll('img');
-    
-    images.forEach(img => {
-        // Add loading="lazy" for better performance
-        if (!img.hasAttribute('loading')) {
-            img.setAttribute('loading', 'lazy');
-        }
-        
-        // Optimize image quality on mobile
-        if (window.innerWidth <= 768) {
-            img.style.imageRendering = 'auto';
-        }
-    });
-}
-
-// Mobile-specific scroll optimizations
-function optimizeScrollForMobile() {
-    let scrollTimeout;
-    
-    window.addEventListener('scroll', () => {
-        // Throttle scroll events on mobile
-        if (window.innerWidth <= 768) {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = setTimeout(() => {
-                // Update scroll-based effects
-                updateScrollProgress();
-                updateNavbarOnScroll();
-            }, 16); // ~60fps
-        }
-    }, { passive: true });
-}
-
-function updateScrollProgress() {
-    const scrollProgress = document.querySelector('.scroll-progress');
-    const scrollTop = window.pageYOffset;
-    const docHeight = document.body.offsetHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / docHeight) * 100;
-    scrollProgress.style.width = scrollPercent + '%';
-}
-
-function updateNavbarOnScroll() {
-    const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
-        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-    } else {
-        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
-        navbar.style.boxShadow = 'none';
+// Google Analytics tracking
+function trackEvent(eventName, parameters = {}) {
+    if (typeof gtag !== 'undefined') {
+        gtag('event', eventName, parameters);
     }
 }
 
-// Swipe gestures for project cards
-function addSwipeGestures() {
-    const projectCards = document.querySelectorAll('.project-card');
-    
-    projectCards.forEach(card => {
-        let startY = 0;
-        let startX = 0;
-        
-        card.addEventListener('touchstart', (e) => {
-            startY = e.touches[0].clientY;
-            startX = e.touches[0].clientX;
-        });
-        
-        card.addEventListener('touchend', (e) => {
-            const endY = e.changedTouches[0].clientY;
-            const endX = e.changedTouches[0].clientX;
-            const diffY = startY - endY;
-            const diffX = Math.abs(startX - endX);
-            
-            // Vertical swipe up to show more details
-            if (diffY > 50 && diffX < 100) {
-                card.classList.add('expanded');
-            }
-            // Vertical swipe down to collapse
-            else if (diffY < -50 && diffX < 100) {
-                card.classList.remove('expanded');
-            }
+// Track navigation clicks
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        trackEvent('navigation_click', {
+            section: link.textContent.trim()
         });
     });
-}
-
-// Mobile form enhancements
-function enhanceMobileForm() {
-    const formInputs = document.querySelectorAll('input, textarea');
-    
-    formInputs.forEach(input => {
-        // Auto-resize textarea on mobile
-        if (input.tagName === 'TEXTAREA') {
-            input.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = this.scrollHeight + 'px';
-            });
-        }
-        
-        // Prevent zoom on input focus (iOS)
-        if (window.innerWidth <= 768) {
-            input.addEventListener('focus', function() {
-                if (parseFloat(getComputedStyle(this).fontSize) < 16) {
-                    this.style.fontSize = '16px';
-                }
-            });
-        }
-    });
-}
-
-// Intersection Observer for mobile animations
-function initMobileAnimations() {
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -20px 0px'
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for mobile animations
-    const animateElements = document.querySelectorAll(
-        '.project-card, .service-card, .experience-item, .education-item'
-    );
-    
-    animateElements.forEach(el => {
-        observer.observe(el);
-    });
-}
-
-// Device orientation handling
-function handleOrientationChange() {
-    window.addEventListener('orientationchange', () => {
-        setTimeout(() => {
-            // Recalculate dimensions after orientation change
-            setMobileVH();
-            
-            // Refresh any layout-dependent elements
-            const skillsContainer = document.querySelector('.skills-container');
-            if (skillsContainer) {
-                skillsContainer.style.transform = '';
-            }
-            
-            // Close mobile menu if open
-            const navMenu = document.querySelector('.nav-menu');
-            if (navMenu && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }, 100);
-    });
-}
-
-// Initialize mobile enhancements
-document.addEventListener('DOMContentLoaded', () => {
-    if (window.innerWidth <= 768) {
-        initMobileNav();
-        addTouchFeedback();
-        optimizeImagesForMobile();
-        optimizeScrollForMobile();
-        addSwipeGestures();
-        enhanceMobileForm();
-        initMobileAnimations();
-        handleOrientationChange();
-    }
 });
 
-// Add mobile-specific CSS
-const mobileStyles = document.createElement('style');
-mobileStyles.textContent = `
-    @media (max-width: 768px) {
-        .hero {
-            min-height: calc(var(--vh, 1vh) * 100);
-        }
-        
-        .animate-in {
-            animation: mobileSlideIn 0.6s ease forwards;
-        }
-        
-        @keyframes mobileSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .project-card.expanded {
-            transform: scale(1.02) !important;
-            z-index: 10;
-        }
-        
-        /* Smooth scrolling for mobile */
-        html {
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        /* Better touch targets */
-        .btn, .nav-link, .social-link {
-            min-height: 44px;
-            min-width: 44px;
-        }
-        
-        /* Prevent text selection on touch */
-        .nav-toggle, .btn, .social-link {
-            -webkit-user-select: none;
-            user-select: none;
-        }
-    }
-`;
-document.head.appendChild(mobileStyles);
+// Track social media clicks
+document.querySelectorAll('.social-link').forEach(link => {
+    link.addEventListener('click', () => {
+        const platform = link.className.includes('linkedin') ? 'LinkedIn' : 
+                        link.className.includes('github') ? 'GitHub' : 
+                        link.className.includes('whatsapp') ? 'WhatsApp' : 'Social';
+        trackEvent('social_click', { platform });
+    });
+});
 
-// Performance Optimization
-let ticking = false;
-
-function updateScrollEffects() {
-    // Batch scroll-based updates here
-    ticking = false;
-}
+// Back to top button
+const backToTopBtn = document.getElementById('back-to-top');
 
 window.addEventListener('scroll', () => {
-    if (!ticking) {
-        requestAnimationFrame(updateScrollEffects);
-        ticking = true;
+    if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+    } else {
+        backToTopBtn.classList.remove('show');
     }
-}, { passive: true });
+});
+
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+
+
+// Initialize page
+document.addEventListener('DOMContentLoaded', () => {
+    window.scrollTo(0, 0);
+    setTimeout(animateCounters, 2000);
+});
