@@ -581,6 +581,337 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+// Mobile-Specific Enhancements
+
+// Touch gesture support for skills slider
+let startX = 0;
+let currentX = 0;
+let isDragging = false;
+
+skillsSlider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    isDragging = true;
+    skillsContainer.style.transition = 'none';
+});
+
+skillsSlider.addEventListener('touchmove', (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    currentX = e.touches[0].clientX;
+    const diffX = currentX - startX;
+    skillsContainer.style.transform = `translateX(${diffX}px)`;
+});
+
+skillsSlider.addEventListener('touchend', () => {
+    if (!isDragging) return;
+    isDragging = false;
+    
+    const diffX = currentX - startX;
+    skillsContainer.style.transition = 'transform 0.3s ease';
+    
+    if (Math.abs(diffX) > 50) {
+        if (diffX > 0) {
+            // Swipe right - previous
+            skillsContainer.style.transform = 'translateX(0)';
+        } else {
+            // Swipe left - next
+            skillsContainer.style.transform = 'translateX(-50%)';
+        }
+    } else {
+        skillsContainer.style.transform = 'translateX(0)';
+    }
+    
+    setTimeout(() => {
+        skillsContainer.style.transition = '';
+        skillsContainer.style.transform = '';
+    }, 300);
+});
+
+// Mobile viewport height fix
+function setMobileVH() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+
+setMobileVH();
+window.addEventListener('resize', setMobileVH);
+window.addEventListener('orientationchange', () => {
+    setTimeout(setMobileVH, 100);
+});
+
+// Enhanced mobile navigation
+function initMobileNav() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const body = document.body;
+    
+    // Prevent body scroll when menu is open
+    navToggle.addEventListener('click', () => {
+        const isActive = navMenu.classList.contains('active');
+        
+        if (isActive) {
+            navMenu.classList.remove('active');
+            body.style.overflow = '';
+        } else {
+            navMenu.classList.add('active');
+            body.style.overflow = 'hidden';
+        }
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+            navMenu.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+    
+    // Close menu on link click
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            body.style.overflow = '';
+        });
+    });
+}
+
+// Touch-friendly button feedback
+function addTouchFeedback() {
+    const buttons = document.querySelectorAll('.btn, .social-link, .method-btn');
+    
+    buttons.forEach(btn => {
+        btn.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        btn.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+}
+
+// Optimize images for mobile
+function optimizeImagesForMobile() {
+    const images = document.querySelectorAll('img');
+    
+    images.forEach(img => {
+        // Add loading="lazy" for better performance
+        if (!img.hasAttribute('loading')) {
+            img.setAttribute('loading', 'lazy');
+        }
+        
+        // Optimize image quality on mobile
+        if (window.innerWidth <= 768) {
+            img.style.imageRendering = 'auto';
+        }
+    });
+}
+
+// Mobile-specific scroll optimizations
+function optimizeScrollForMobile() {
+    let scrollTimeout;
+    
+    window.addEventListener('scroll', () => {
+        // Throttle scroll events on mobile
+        if (window.innerWidth <= 768) {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                // Update scroll-based effects
+                updateScrollProgress();
+                updateNavbarOnScroll();
+            }, 16); // ~60fps
+        }
+    }, { passive: true });
+}
+
+function updateScrollProgress() {
+    const scrollProgress = document.querySelector('.scroll-progress');
+    const scrollTop = window.pageYOffset;
+    const docHeight = document.body.offsetHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    scrollProgress.style.width = scrollPercent + '%';
+}
+
+function updateNavbarOnScroll() {
+    const navbar = document.querySelector('.navbar');
+    if (window.scrollY > 50) {
+        navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+        navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+    } else {
+        navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+        navbar.style.boxShadow = 'none';
+    }
+}
+
+// Swipe gestures for project cards
+function addSwipeGestures() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    projectCards.forEach(card => {
+        let startY = 0;
+        let startX = 0;
+        
+        card.addEventListener('touchstart', (e) => {
+            startY = e.touches[0].clientY;
+            startX = e.touches[0].clientX;
+        });
+        
+        card.addEventListener('touchend', (e) => {
+            const endY = e.changedTouches[0].clientY;
+            const endX = e.changedTouches[0].clientX;
+            const diffY = startY - endY;
+            const diffX = Math.abs(startX - endX);
+            
+            // Vertical swipe up to show more details
+            if (diffY > 50 && diffX < 100) {
+                card.classList.add('expanded');
+            }
+            // Vertical swipe down to collapse
+            else if (diffY < -50 && diffX < 100) {
+                card.classList.remove('expanded');
+            }
+        });
+    });
+}
+
+// Mobile form enhancements
+function enhanceMobileForm() {
+    const formInputs = document.querySelectorAll('input, textarea');
+    
+    formInputs.forEach(input => {
+        // Auto-resize textarea on mobile
+        if (input.tagName === 'TEXTAREA') {
+            input.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = this.scrollHeight + 'px';
+            });
+        }
+        
+        // Prevent zoom on input focus (iOS)
+        if (window.innerWidth <= 768) {
+            input.addEventListener('focus', function() {
+                if (parseFloat(getComputedStyle(this).fontSize) < 16) {
+                    this.style.fontSize = '16px';
+                }
+            });
+        }
+    });
+}
+
+// Intersection Observer for mobile animations
+function initMobileAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -20px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+    
+    // Observe elements for mobile animations
+    const animateElements = document.querySelectorAll(
+        '.project-card, .service-card, .experience-item, .education-item'
+    );
+    
+    animateElements.forEach(el => {
+        observer.observe(el);
+    });
+}
+
+// Device orientation handling
+function handleOrientationChange() {
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            // Recalculate dimensions after orientation change
+            setMobileVH();
+            
+            // Refresh any layout-dependent elements
+            const skillsContainer = document.querySelector('.skills-container');
+            if (skillsContainer) {
+                skillsContainer.style.transform = '';
+            }
+            
+            // Close mobile menu if open
+            const navMenu = document.querySelector('.nav-menu');
+            if (navMenu && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }, 100);
+    });
+}
+
+// Initialize mobile enhancements
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.innerWidth <= 768) {
+        initMobileNav();
+        addTouchFeedback();
+        optimizeImagesForMobile();
+        optimizeScrollForMobile();
+        addSwipeGestures();
+        enhanceMobileForm();
+        initMobileAnimations();
+        handleOrientationChange();
+    }
+});
+
+// Add mobile-specific CSS
+const mobileStyles = document.createElement('style');
+mobileStyles.textContent = `
+    @media (max-width: 768px) {
+        .hero {
+            min-height: calc(var(--vh, 1vh) * 100);
+        }
+        
+        .animate-in {
+            animation: mobileSlideIn 0.6s ease forwards;
+        }
+        
+        @keyframes mobileSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .project-card.expanded {
+            transform: scale(1.02) !important;
+            z-index: 10;
+        }
+        
+        /* Smooth scrolling for mobile */
+        html {
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        /* Better touch targets */
+        .btn, .nav-link, .social-link {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Prevent text selection on touch */
+        .nav-toggle, .btn, .social-link {
+            -webkit-user-select: none;
+            user-select: none;
+        }
+    }
+`;
+document.head.appendChild(mobileStyles);
+
 // Performance Optimization
 let ticking = false;
 
@@ -594,4 +925,4 @@ window.addEventListener('scroll', () => {
         requestAnimationFrame(updateScrollEffects);
         ticking = true;
     }
-});
+}, { passive: true });
