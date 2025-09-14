@@ -10,8 +10,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #3498db 100%);
     display: flex;
     align-items: center;
@@ -23,52 +23,37 @@
 .loader-content {
     text-align: center;
     color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .spinner {
-    width: 100px;
-    height: 100px;
-    position: relative;
-    margin: 0 auto 2rem;
+    display: flex;
+    gap: 8px;
+    margin: 0 0 2rem 0;
 }
 
-.spinner .dot {
-    position: absolute;
+.dot {
     width: 12px;
     height: 12px;
     border-radius: 50%;
-    animation: dna-helix 2s linear infinite;
+    background: #f39c12;
+    animation: dotPulse 1.4s ease-in-out infinite;
 }
 
-.spinner .dot:nth-child(1) { background: #3498db; animation-delay: 0s; }
-.spinner .dot:nth-child(2) { background: #e74c3c; animation-delay: -0.2s; }
-.spinner .dot:nth-child(3) { background: #f39c12; animation-delay: -0.4s; }
-.spinner .dot:nth-child(4) { background: #27ae60; animation-delay: -0.6s; }
-.spinner .dot:nth-child(5) { background: #9b59b6; animation-delay: -0.8s; }
-.spinner .dot:nth-child(6) { background: #1abc9c; animation-delay: -1s; }
-.spinner .dot:nth-child(7) { background: #e67e22; animation-delay: -1.2s; }
-.spinner .dot:nth-child(8) { background: #34495e; animation-delay: -1.4s; }
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
 
-@keyframes dna-helix {
-    0% {
-        transform: rotate(0deg) translateX(40px) rotate(0deg);
-        opacity: 1;
-        transform-origin: 50px 50px;
+@keyframes dotPulse {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
     }
-    25% {
-        transform: rotate(90deg) translateX(40px) rotate(-90deg);
-        opacity: 0.7;
-    }
-    50% {
-        transform: rotate(180deg) translateX(40px) rotate(-180deg);
-        opacity: 0.4;
-    }
-    75% {
-        transform: rotate(270deg) translateX(40px) rotate(-270deg);
-        opacity: 0.7;
-    }
-    100% {
-        transform: rotate(360deg) translateX(40px) rotate(-360deg);
+    40% {
+        transform: scale(1.2);
         opacity: 1;
     }
 }
@@ -1088,6 +1073,19 @@ section {
         font-size: 2.5rem;
     }
     
+    .hero-subtitle {
+        font-size: 1.2rem;
+        height: auto;
+        min-height: 4rem;
+    }
+    
+    .typing-text {
+        white-space: normal;
+        border-right: none;
+        animation: none;
+        line-height: 1.4;
+    }
+    
     .hero-buttons {
         justify-content: center;
         flex-wrap: wrap;
@@ -1123,6 +1121,11 @@ section {
 @media (max-width: 480px) {
     .hero-title {
         font-size: 1.8rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem;
+        min-height: 5rem;
     }
     
     .profile-pic {
