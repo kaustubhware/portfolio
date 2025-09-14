@@ -4,17 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description"
-        content="Kaustubh - AI/ML Engineer, Data Analyst & Geospatial Specialist. Expert in machine learning, geospatial analytics, and data visualization. Available for freelance projects.">
+    <meta name="description" content="Kaustubh Portfolio">
     <meta name="keywords"
         content="AI, Machine Learning, Data Analysis, Geospatial, GIS, Python, TensorFlow, Power BI, Freelancer, Data Scientist">
     <meta property="og:title" content="Kaustubh - AI/ML Engineer & Geospatial Specialist">
     <meta property="og:description"
         content="Transform your data challenges into breakthrough solutions with expert AI/ML and geospatial analysis services.">
     <meta property="og:type" content="website">
-    <title>Kaustubh - AI/ML Engineer & Geospatial Specialist</title>
-    <link rel="icon" type="image/x-icon"
-        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    <title>Kaustubh Portfolio</title>
+
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
@@ -33,17 +31,25 @@
 </head>
 
 <body>
-
+    <!-- Loader -->
+    <div id="loader" class="loader">
+        <div class="loader-content">
+            <div class="spinner">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+            <p>Loading Portfolio...</p>
+        </div>
+    </div>
 
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress"></div>
-
-    <!-- Dark Mode Toggle -->
-    <div class="theme-toggle">
-        <button id="theme-toggle" class="theme-btn">
-            <i class="fas fa-moon"></i>
-        </button>
-    </div>
 
     <!-- Background Particles -->
     <div class="particles">
@@ -178,25 +184,32 @@
                     </div>
                     <div class="certifications-section">
                         <h3>Certifications</h3>
-                        <div class="certification-item">
-                            <div class="cert-header">
-                                <h4>Google Earth Engine Certified</h4>
-                                <span class="cert-issuer">Google</span>
-                                <span class="cert-year">2024</span>
-                            </div>
-                        </div>
-                        <div class="certification-item">
-                            <div class="cert-header">
-                                <h4>AWS Machine Learning Specialty</h4>
-                                <span class="cert-issuer">Amazon Web Services</span>
-                                <span class="cert-year">2024</span>
-                            </div>
-                        </div>
-                        <div class="certification-item">
-                            <div class="cert-header">
-                                <h4>TensorFlow Developer Certificate</h4>
-                                <span class="cert-issuer">TensorFlow</span>
-                                <span class="cert-year">2023</span>
+                        <div class="cert-slider">
+                            <div class="cert-container">
+                                <div class="cert-card">
+                                    <div class="cert-icon">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <h4>Microsoft Power BI</h4>
+                                    <p class="cert-issuer">Coursera</p>
+                                    <span class="cert-year">Feb 2024</span>
+                                </div>
+                                <div class="cert-card">
+                                    <div class="cert-icon">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <h4>Data Analytics by IBM</h4>
+                                    <p class="cert-issuer">Coursera</p>
+                                    <span class="cert-year">Dec 2023</span>
+                                </div>
+                                <div class="cert-card">
+                                    <div class="cert-icon">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <h4>Generative AI</h4>
+                                    <p class="cert-issuer">UpGrad</p>
+                                    <span class="cert-year">2024</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -222,10 +235,6 @@
             </div>
         </div>
     </section>
-
-
-
-
 
     <!-- Skills Section -->
     <section id="skills" class="skills">
@@ -476,8 +485,6 @@
         </div>
     </section>
 
-
-
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -485,82 +492,56 @@
                 <span class="title-icon">📬</span>
                 Get In Touch
             </h2>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Build Something Amazing</h3>
-                    <p>Turn your data challenges into breakthrough solutions. I'm here to make the complex simple and the impossible possible.</p>
-                    
-                    <div class="contact-details">
-                        <div class="contact-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span>Pune, India</span>
-                        </div>
-                    </div>
-                    
-                    <div class="social-links">
-                        <a href="https://github.com/kaustubhware" class="social-link" target="_blank" title="GitHub">
-                            <i class="fab fa-github"></i>
-                        </a>
-                        <a href="https://www.linkedin.com/in/kaustubhware12/" class="social-link" target="_blank" title="LinkedIn">
-                            <i class="fab fa-linkedin"></i>
-                        </a>
-                        <a href="https://wa.me/917721809744" class="social-link whatsapp-link" target="_blank" title="WhatsApp">
-                            <i class="fab fa-whatsapp"></i>
-                        </a>
+            <div class="contact-wrapper">
+                <div class="contact-header">
+                    <h3>Ready to Transform Your Vision into Reality?</h3>
+                    <p>Where data meets intelligence and possibilities become reality. Let's engineer the future of your business with precision, innovation, and measurable impact.</p>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Pune, India</span>
                     </div>
                 </div>
                 
-                <div class="contact-card">
-                    <div class="contact-header">
-                        <h3>Ready to Start Your Project?</h3>
-                        <p>Choose your preferred way to connect with me.</p>
-                    </div>
-                    
-                    <div class="contact-methods">
-                        <a href="mailto:kaustubhware12@gmail.com" class="contact-method email">
-                            <div class="method-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="method-info">
-                                <h4>Email Me</h4>
-                                <p>kaustubhware12@gmail.com</p>
-                                <span class="method-action">Send Email →</span>
-                            </div>
-                        </a>
-                        
-                        <a href="https://wa.me/917721809744" class="contact-method whatsapp" target="_blank">
-                            <div class="method-icon">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div class="method-info">
-                                <h4>WhatsApp</h4>
-                                <p>+91 7721809744</p>
-                                <span class="method-action">Chat Now →</span>
-                            </div>
-                        </a>
-                        
-                        <a href="https://www.linkedin.com/in/kaustubhware12/" class="contact-method linkedin" target="_blank">
-                            <div class="method-icon">
-                                <i class="fab fa-linkedin"></i>
-                            </div>
-                            <div class="method-info">
-                                <h4>LinkedIn</h4>
-                                <p>Professional Network</p>
-                                <span class="method-action">Connect →</span>
-                            </div>
-                        </a>
-                    </div>
-                    
-                    <div class="availability-badge">
-                        <div class="badge-content">
-                            <div class="status-dot"></div>
-                            <span>Available for new projects</span>
+                <div class="contact-methods">
+                    <a href="mailto:kaustubhware12@gmail.com" class="contact-method email">
+                        <div class="method-icon">
+                            <i class="fas fa-envelope"></i>
                         </div>
-                        <div class="response-time">
-                            <i class="fas fa-clock"></i>
-                            <span>24h response time</span>
+                        <div class="method-info">
+                            <h4>Email Me</h4>
+                            <p>kaustubhware12@gmail.com</p>
                         </div>
+                    </a>
+
+                    <a href="https://wa.me/917721809744" class="contact-method whatsapp" target="_blank">
+                        <div class="method-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="method-info">
+                            <h4>WhatsApp</h4>
+                            <p>+91 7721809744</p>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="availability-info">
+                    <div class="status">
+                        <div class="status-dot"></div>
+                        <span>Available for new projects</span>
                     </div>
+                    <div class="response">
+                        <i class="fas fa-clock"></i>
+                        <span>24h response time</span>
+                    </div>
+                </div>
+
+                <div class="social-links">
+                    <a href="https://github.com/kaustubhware" class="social-link" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/kaustubhware12/" class="social-link" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
                 </div>
             </div>
         </div>
@@ -580,59 +561,6 @@
 
 
     <script src="script.js"></script>
-
-    <!-- Visitor Counter -->
-    <script>
-        // Simple visitor tracking
-        let visitors = localStorage.getItem('portfolioVisitors') || 0;
-        visitors++;
-        localStorage.setItem('portfolioVisitors', visitors);
-        console.log('Total visits to your portfolio:', visitors);
-
-        // Track page views
-        if (typeof gtag !== 'undefined') {
-            gtag('event', 'page_view', {
-                page_title: 'Kaustubh Portfolio',
-                page_location: window.location.href
-            });
-        }
-    </script>
-    <script>
-        // Force scroll to top on page load
-        if (history.scrollRestoration) {
-            history.scrollRestoration = 'manual';
-        }
-        window.scrollTo(0, 0);
-        document.addEventListener('DOMContentLoaded', () => {
-            window.scrollTo(0, 0);
-        });
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                window.scrollTo(0, 0);
-                // Trigger counter animation on page load
-                setTimeout(() => {
-                    const counters = document.querySelectorAll('.counter');
-                    counters.forEach(counter => {
-                        const target = parseInt(counter.getAttribute('data-target'));
-                        const increment = target / 100;
-                        let current = 0;
-
-                        const updateCounter = () => {
-                            if (current < target) {
-                                current += increment;
-                                counter.textContent = Math.ceil(current);
-                                setTimeout(updateCounter, 20);
-                            } else {
-                                counter.textContent = target;
-                            }
-                        };
-
-                        updateCounter();
-                    });
-                }, 2000);
-            }, 100);
-        });
-    </script>
 </body>
 
 </html>
